@@ -12,7 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('config_heaters', function (Blueprint $table) {
-            $table->id();
+            $table->string('device_id');
+            $table->foreign('device_id')->references('id')->on('devices');
+            $table->enum('mode', ['MANUAL', 'OTOMATIC'])->default('MANUAL');
+            $table->boolean('status')->default(0);
+            $table->float('max_temp')->nullable();
+            $table->float('min_temp')->nullable();
             $table->timestamps();
         });
     }
